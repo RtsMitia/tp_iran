@@ -11,6 +11,8 @@ services:
 
   db:
     image: mysql:8.0
+    volumes:
+      - ./database.sql:/docker-entrypoint-initdb.d/init.sql # This runs the script automatically on startup
     environment:
       MYSQL_DATABASE: tp_iran
       MYSQL_ROOT_PASSWORD: password
