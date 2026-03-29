@@ -1,0 +1,12 @@
+# Database & Sensitive info
+.env
+config.php
+*.log
+
+# OS Junk
+.DS_Store
+Thumbs.db
+
+# Docker
+.docker/
+/vendor
