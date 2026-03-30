@@ -32,7 +32,10 @@ CREATE TABLE IF NOT EXISTS users (
 -- 4. Insert "Dummy" data for testing
 -- The password below is 'admin123' hashed using PHP's password_hash
 INSERT INTO users (username, password, email) VALUES 
-('admin', '$2y$10$nS7X2L.mU6B4G6B.8N6v7O6k9P0Q1R2S3T4U5V6W7X8Y9Z0a1b2c3', 'admin@example.com');
+('admin', '$2y$12$U3xGtM1h1Ch5mVOBuBhnCeWQo1u.uwTqxgrbqZ2v5i5/OmJwEVZvu', 'admin@example.com')
+ON DUPLICATE KEY UPDATE
+password = VALUES(password),
+email = VALUES(email);
 
 INSERT INTO articles (title, slug, excerpt, content) VALUES 
 ('The History of the Iran-Iraq War', 
