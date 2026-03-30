@@ -12,3 +12,9 @@ Thumbs.db
 /vendor
 
 01-Miniprojet-Web design-2026.pdf
+
+# Ignorer les images téléchargées par l'admin
+public/assets/uploads/*
+
+# Sauf un fichier vide pour garder le dossier sur Git
+!public/assets/uploads/.gitkeep

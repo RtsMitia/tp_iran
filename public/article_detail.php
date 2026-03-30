@@ -41,7 +41,7 @@ include __DIR__ . '/../src/includes/header.php';
         <div class="article-gallery">
             <?php foreach ($images as $image): ?>
                 <figure>
-                    <img src="<?= htmlspecialchars($image['path']) ?>" 
+                    <img src="assets/uploads/<?= htmlspecialchars($image['path']) ?>" 
                          alt="<?= htmlspecialchars($image['alt']) ?>" 
                          style="max-width: 100%; height: auto;">
                     <figcaption><?= htmlspecialchars($image['alt']) ?></figcaption>
