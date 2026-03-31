@@ -1,8 +1,8 @@
 FROM php:8.2-apache
 # Install MySQL driver for PHP
 RUN docker-php-ext-install pdo pdo_mysql
-# Enable Apache Rewrite Module (Crucial for URL Rewriting)
-RUN a2enmod rewrite
+# Enable Apache Rewrite and Cache Modules
+RUN a2enmod rewrite expires headers deflate
 
 # Serve the public directory as the web root.
 ENV APACHE_DOCUMENT_ROOT=/var/www/html/public

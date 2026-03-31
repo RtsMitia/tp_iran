@@ -10,9 +10,8 @@ if (!$id) {
     exit;
 }
 
-// 2. Chercher l'article et ses images
+// 2. Chercher l'article
 $article = getArticleById($pdo, $id);
-$images  = getArticleImages($pdo, $id);
 
 // Si l'article n'existe pas, retour à l'accueil
 if (!$article) {
@@ -37,24 +36,9 @@ include __DIR__ . '/../src/includes/header.php';
         </p>
     </header>
 
-    <?php if (!empty($images)): ?>
-        <div class="article-gallery">
-            <?php foreach ($images as $image): ?>
-                <figure>
-                    <img src="assets/uploads/<?= htmlspecialchars($image['path']) ?>" 
-                         alt="<?= htmlspecialchars($image['alt']) ?>"
-                         loading="lazy" 
-                         style="max-width: 100%; height: auto;">
-                    <figcaption><?= htmlspecialchars($image['alt']) ?></figcaption>
-                </figure>
-            <?php endforeach; ?>
-        </div>
-    <?php endif; ?>
-
     <div class="article-content">
         <?php 
-            // On utilise echo sans htmlspecialchars ici car le contenu 
-            // vient de TinyMCE et contient déjà des balises HTML sécurisées
+            
             echo $article['content']; 
         ?>
     </div>

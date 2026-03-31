@@ -15,6 +15,9 @@ $additionalHead = $additionalHead ?? '';
     <meta name="description" content="<?= htmlspecialchars($metaDescription, ENT_QUOTES, 'UTF-8') ?>">
     <meta name="keywords" content="<?= htmlspecialchars($metaKeywords, ENT_QUOTES, 'UTF-8') ?>">
     <meta name="author" content="Front Office">
+    
+    <!-- Preload critical CSS -->
+    <link rel="preload" href="assets/css/style.css" as="style">
     <link rel="stylesheet" href="assets/css/style.css">
     
     <?= $additionalHead ?>

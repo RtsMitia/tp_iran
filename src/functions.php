@@ -1,9 +1,23 @@
 <?php
 
 function getAllArticles($pdo) {
-    $sql = "SELECT id, title, slug, excerpt, published_at 
-            FROM articles 
-            ORDER BY published_at DESC";
+    $sql = "SELECT a.id, a.title, a.slug, a.excerpt, a.published_at,
+                   (
+                       SELECT i.path
+                       FROM images i
+                       WHERE i.article_id = a.id
+                       ORDER BY i.id ASC
+                       LIMIT 1
+                   ) AS image_path,
+                   (
+                       SELECT i.alt
+                       FROM images i
+                       WHERE i.article_id = a.id
+                       ORDER BY i.id ASC
+                       LIMIT 1
+                   ) AS image_alt
+            FROM articles a
+            ORDER BY a.published_at DESC";
     
     $stmt = $pdo->query($sql);
     return $stmt->fetchAll();
