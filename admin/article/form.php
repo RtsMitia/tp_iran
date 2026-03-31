@@ -57,6 +57,7 @@ if ($isEdit) {
     <form method="post" action="/admin/article/save.php" id="article-form">
         <input type="hidden" name="id" value="<?= (int) $article['id'] ?>">
         <input type="hidden" id="published_at" name="published_at" value="<?= htmlspecialchars($article['published_at'], ENT_QUOTES, 'UTF-8') ?>">
+        <input type="hidden" id="uploaded_images" name="uploaded_images" value="[]">
 
         <div class="row">
             <label for="content">Contenu (TinyMCE)</label>
@@ -74,6 +75,14 @@ if ($isEdit) {
     <pre id="html-output" style="background:#f0f0f0; padding:10px; white-space:pre-wrap;">Apercu vide</pre>
 
     <script>
+        const uploadedImagesInput = document.getElementById('uploaded_images');
+        const uploadedImages = [];
+
+        function addUploadedImage(url, alt) {
+            uploadedImages.push({ location: url, alt: alt || '' });
+            uploadedImagesInput.value = JSON.stringify(uploadedImages);
+        }
+
         tinymce.init({
             selector: '#myEditor',
             menubar: 'file edit view insert format tools table help',
@@ -124,6 +133,7 @@ if ($isEdit) {
                             }
 
                             uploadedUrls.push(json.location);
+                            addUploadedImage(json.location, file.name);
                         } catch (error) {
                             alert('Echec upload "' + file.name + '": ' + error.message);
                         }
@@ -143,6 +153,21 @@ if ($isEdit) {
                 };
 
                 input.click();
+            }
+        });
+
+        document.getElementById('article-form').addEventListener('submit', () => {
+            const html = tinymce.get('myEditor').getContent();
+            const parser = new DOMParser();
+            const doc = parser.parseFromString(html, 'text/html');
+            const imgNodes = Array.from(doc.querySelectorAll('img[src]'));
+
+            for (const img of imgNodes) {
+                const src = (img.getAttribute('src') || '').trim();
+                if (!src) {
+                    continue;
+                }
+                addUploadedImage(src, img.getAttribute('alt') || '');
             }
         });
 

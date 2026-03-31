@@ -51,6 +51,47 @@ function extractMetaFromHtml(string $html): array {
     ];
 }
 
+function extractLocalImagesFromHtml(string $html): array {
+    $doc = new DOMDocument();
+    @$doc->loadHTML('<?xml encoding="utf-8" ?>' . $html);
+
+    $images = [];
+    $nodes = $doc->getElementsByTagName('img');
+
+    foreach ($nodes as $img) {
+        $srcRaw = trim((string) $img->getAttribute('src'));
+        if ($srcRaw === '') {
+            continue;
+        }
+
+        $search = 'assets/uploads/';
+        $pos = strpos($srcRaw, $search);
+
+        if ($pos !== false) {
+            $storedPath = substr($srcRaw, $pos + strlen($search));
+            $storedPath = trim($storedPath, '/');
+        } else {
+            continue;
+        }
+
+        if ($storedPath === '') {
+            continue;
+        }
+
+        $alt = normalizeSpace((string) $img->getAttribute('alt'));
+        if ($alt === '') {
+            $alt = pathinfo($storedPath, PATHINFO_FILENAME);
+        }
+
+        $images[$storedPath] = [
+            'path' => $storedPath,
+            'alt' => cut160($alt),
+        ];
+    }
+
+    return array_values($images);
+}
+
 $id = isset($_POST['id']) ? (int) $_POST['id'] : 0;
 $title = trim((string) ($_POST['title'] ?? ''));
 $slug = trim((string) ($_POST['slug'] ?? ''));
@@ -92,14 +133,35 @@ if ($publishedAt === '') {
 }
 
 try {
+    $pdo->beginTransaction();
+
+    $articleId = $id;
     if ($id > 0) {
         $stmt = $pdo->prepare('UPDATE articles SET title = ?, slug = ?, excerpt = ?, content = ?, published_at = ? WHERE id = ?');
         $stmt->execute([$title, $slug, $excerpt, $content, $publishedAtSql, $id]);
     } else {
         $stmt = $pdo->prepare('INSERT INTO articles (title, slug, excerpt, content, published_at) VALUES (?, ?, ?, ?, ?)');
         $stmt->execute([$title, $slug, $excerpt, $content, $publishedAtSql]);
+        $articleId = (int) $pdo->lastInsertId();
     }
+
+    $del = $pdo->prepare('DELETE FROM images WHERE article_id = ?');
+    $del->execute([$articleId]);
+
+    $images = extractLocalImagesFromHtml($content);
+    if (!empty($images)) {
+        $ins = $pdo->prepare('INSERT INTO images (article_id, path, alt) VALUES (?, ?, ?)');
+        foreach ($images as $image) {
+            $ins->execute([$articleId, $image['path'], $image['alt']]);
+        }
+    }
+
+    $pdo->commit();
 } catch (PDOException $e) {
+    if ($pdo->inTransaction()) {
+        $pdo->rollBack();
+    }
+
     http_response_code(400);
     if ((int) $e->getCode() === 23000) {
         echo 'Slug deja utilise. Choisissez-en un autre.';
