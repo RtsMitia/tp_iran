@@ -1,6 +1,6 @@
 <?php
 
-function getAllArticles($pdo) {
+function getAllArticles($pdo, $startDate = null, $endDate = null) {
     $sql = "SELECT a.id, a.title, a.slug, a.excerpt, a.published_at,
                    (
                        SELECT i.path
@@ -16,10 +16,28 @@ function getAllArticles($pdo) {
                        ORDER BY i.id ASC
                        LIMIT 1
                    ) AS image_alt
-            FROM articles a
-            ORDER BY a.published_at DESC";
+            FROM articles a";
     
-    $stmt = $pdo->query($sql);
+    $params = [];
+    $conditions = [];
+
+    if ($startDate) {
+        $conditions[] = "a.published_at >= ?";
+        $params[] = $startDate . ' 00:00:00';
+    }
+    if ($endDate) {
+        $conditions[] = "a.published_at <= ?";
+        $params[] = $endDate . ' 23:59:59';
+    }
+
+    if (!empty($conditions)) {
+        $sql .= " WHERE " . implode(' AND ', $conditions);
+    }
+
+    $sql .= " ORDER BY a.published_at DESC";
+    
+    $stmt = $pdo->prepare($sql);
+    $stmt->execute($params);
     return $stmt->fetchAll();
 }
 
