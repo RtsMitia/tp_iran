@@ -10,9 +10,8 @@ if (!$id) {
     exit;
 }
 
-// 2. Chercher l'article et ses images
+// 2. Chercher l'article
 $article = getArticleById($pdo, $id);
-$images  = getArticleImages($pdo, $id);
 
 // Si l'article n'existe pas, retour à l'accueil
 if (!$article) {
@@ -36,36 +35,6 @@ include __DIR__ . '/../src/includes/header.php';
             Publié le : <?= date('d/m/Y', strtotime($article['published_at'])) ?>
         </p>
     </header>
-
-    <?php if (!empty($images)): ?>
-        <div class="article-gallery">
-            <?php foreach ($images as $index => $image): 
-                $imgPath = __DIR__ . '/assets/uploads/' . $image['path'];
-                $imgWidth = '';
-                $imgHeight = '';
-                if (file_exists($imgPath)) {
-                    $size = getimagesize($imgPath);
-                    if ($size) {
-                        $imgWidth = $size[0];
-                        $imgHeight = $size[1];
-                    }
-                }
-            ?>
-                <figure>
-                    <img src="assets/uploads/<?= htmlspecialchars($image['path']) ?>" 
-                         alt="<?= htmlspecialchars($image['alt']) ?>"
-                         <?php if ($imgWidth): ?>width="<?= $imgWidth ?>" height="<?= $imgHeight ?>"<?php endif; ?>
-                         <?php if ($index === 0): ?>
-                             fetchpriority="high"
-                         <?php else: ?>
-                             loading="lazy" 
-                         <?php endif; ?>
-                         style="max-width: 100%; height: auto;">
-                    <figcaption><?= htmlspecialchars($image['alt']) ?></figcaption>
-                </figure>
-            <?php endforeach; ?>
-        </div>
-    <?php endif; ?>
 
     <div class="article-content">
         <?php 

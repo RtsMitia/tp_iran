@@ -124,26 +124,28 @@ body {
     margin-top: 30px;
 }
 
-/* Images gallery styling */
-.article-gallery {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 20px;
+/* Images inside TinyMCE content */
+.article-content img {
+    max-width: 350px; /* Restrict maximum size to keep them small */
+    width: 100%; /* Ensure responsiveness on very small screens */
+    height: auto;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    margin: 20px auto;
+    display: block; /* Centered by default */
+}
+
+/* Captions and figures from TinyMCE if used */
+.article-content figure {
     margin: 20px 0;
 }
 
-.article-gallery img {
-    width: 100%;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-}
-
-.article-gallery figcaption {
+.article-content figcaption {
     font-style: italic;
     text-align: center;
     font-size: 0.9rem;
     color: #555;
-    margin-top: 5px;
+    margin-top: 8px;
 }
 
 /* Lists and Blockquotes from TinyMCE */
