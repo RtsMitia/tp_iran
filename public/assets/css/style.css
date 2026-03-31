@@ -1,43 +1,105 @@
 /* --- Basic Setup --- */
 body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
     line-height: 1.6;
-    color: #333;
+    color: #111;
     margin: 0;
-    background-color: #f4f4f4;
+    background-color: #f9f9fa;
 }
 
 .container {
-    max-width: 900px;
+    max-width: 960px;
     margin: 0 auto;
-    padding: 20px;
+    padding: 30px;
     background: #fff;
+    box-shadow: 0 0 10px rgba(0,0,0,0.02);
 }
+
+h1, h2, h3, h4, .article-item h2 a, .article-content h2, .article-content h3 {
+    font-family: 'Playfair Display', Georgia, 'Times New Roman', serif;
+    font-weight: 700;
+}
+
+/* --- Filter Form Styling (Le Monde vibe) --- */
+.filters-container {
+    margin-bottom: 30px;
+    padding: 15px;
+    background-color: #f4f4f4;
+    border-top: 2px solid #000;
+}
+
+.filter-form {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    align-items: flex-end;
+}
+
+.filter-group {
+    display: flex;
+    flex-direction: column;
+}
+
+.filter-group label {
+    font-size: 0.8rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    margin-bottom: 5px;
+    color: #333;
+}
+
+.filter-group input[type="date"] {
+    padding: 8px;
+    border: 1px solid #ccc;
+    font-family: inherit;
+}
+
+.filter-actions {
+    display: flex;
+    gap: 10px;
+}
+
+.btn-filter, .btn-clear-filter {
+    padding: 9px 15px;
+    background: #000;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    text-decoration: none;
+    line-height: 1;
+    display: inline-block;
+}
+
+.btn-clear-filter {
+    background: #ccc;
+    color: #000;
+}
+
+.btn-filter:hover { background: #333; }
+.btn-clear-filter:hover { background: #aaa; }
 
 /* --- Index.php: Article List Styling --- */
 .article-grid {
-    display: grid;
-    gap: 18px;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
 }
 
 .article-item {
-    padding: 22px;
-    border: 1px solid #e9ecef;
-    border-radius: 12px;
-    background: #fff;
-    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05);
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    padding: 25px 0;
+    border-bottom: 1px solid #e0e0e0;
 }
 
-.article-item:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 8px 18px rgba(0, 0, 0, 0.09);
+.article-item:last-child {
+    border-bottom: none;
 }
 
 .article-item-inner {
     display: grid;
-    grid-template-columns: 220px 1fr;
-    gap: 20px;
+    grid-template-columns: 240px 1fr;
+    gap: 25px;
     align-items: start;
 }
 
@@ -50,8 +112,9 @@ body {
 .article-thumb img,
 .article-thumb-placeholder {
     width: 100%;
-    height: 145px;
-    border-radius: 10px;
+    height: auto;
+    aspect-ratio: 3/2;
+    border-radius: 0; /* Flat corners for editorial look */
 }
 
 .article-thumb img {
@@ -63,29 +126,56 @@ body {
 .article-thumb-placeholder {
     display: grid;
     place-items: center;
-    background: linear-gradient(135deg, #f2f2f2, #e5e5e5);
+    background: #eaeaea;
     color: #555;
     font-size: 0.9rem;
 }
 
 .article-main h2 {
     margin-top: 0;
+    margin-bottom: 8px;
+    font-size: 1.6rem;
+    line-height: 1.2;
 }
 
 .article-item h2 a {
-    color: #2c3e50;
+    color: #000;
     text-decoration: none;
-    transition: 0.3s;
+    transition: color 0.2s;
 }
 
 .article-item h2 a:hover {
-    color: #b55c11; /* Darker Iranian Orange/Copper tone for better contrast */
+    color: #0056b3; /* Classic news blue */
 }
 
 .article-meta {
+    font-size: 0.75rem;
+    font-family: Arial, sans-serif;
+    text-transform: uppercase;
+    color: #777;
+    margin-bottom: 12px;
+}
+
+.article-excerpt {
+    color: #333;
+    font-size: 1rem;
+    line-height: 1.5;
+}
+
+.btn-read-more {
+    display: inline-block;
+    margin-top: 10px;
     font-size: 0.9rem;
-    color: #555; /* Changed from #777 for better contrast */
-    margin-bottom: 10px;
+    font-weight: bold;
+    color: #000;
+    text-decoration: none;
+    border-bottom: 1px solid #000;
+    padding-bottom: 2px;
+}
+
+.btn-read-more:hover {
+    color: #0056b3;
+    border-color: #0056b3;
 }
 
 .article-grid hr {
@@ -96,11 +186,6 @@ body {
     .article-item-inner {
         grid-template-columns: 1fr;
     }
-
-    .article-thumb img,
-    .article-thumb-placeholder {
-        height: 190px;
-    }
 }
 
 /* --- Article_detail.php: DATABASE CONTENT STYLING --- */
@@ -108,31 +193,32 @@ body {
 
 .article-content {
     margin-top: 30px;
-    font-size: 1.1rem;
+    font-size: 1.15rem;
+    line-height: 1.7;
 }
 
 /* Titles inside the article (H2, H3 from DB) */
 .article-content h2 {
-    color: #2c3e50;
-    border-left: 5px solid #e67e22;
-    padding-left: 15px;
+    color: #000;
+    border-bottom: 2px solid #000;
+    padding-bottom: 5px;
     margin-top: 40px;
 }
 
 .article-content h3 {
-    color: #34495e;
+    color: #000;
     margin-top: 30px;
 }
 
 /* Images inside TinyMCE content */
 .article-content img {
-    max-width: 350px; /* Restrict maximum size to keep them small */
-    width: 100%; /* Ensure responsiveness on very small screens */
+    max-width: 500px; /* Kept constrained per previous preference, but flat */
+    width: 100%;
     height: auto;
-    border-radius: 8px;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-    margin: 20px auto;
-    display: block; /* Centered by default */
+    border-radius: 0;
+    box-shadow: none; /* No shadow for editorial look */
+    margin: 30px auto;
+    display: block;
 }
 
 /* Captions and figures from TinyMCE if used */

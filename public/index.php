@@ -2,8 +2,11 @@
 require_once __DIR__ . '/../src/database.php';
 require_once __DIR__ . '/../src/functions.php';
 
+$startDate = $_GET['start_date'] ?? null;
+$endDate = $_GET['end_date'] ?? null;
+
 // Logique : Récupérer les données
-$articles = getAllArticles($pdo);
+$articles = getAllArticles($pdo, $startDate, $endDate);
 
 // Variables SEO
 $pageTitle       = "Archives du Conflit en Iran : Histoire, Batailles et Analyses";
@@ -19,6 +22,25 @@ include __DIR__ . '/../src/includes/header.php';
         <h1>Derniers Articles sur le Conflit en Iran</h1>
         <p class="subtitle">Documentation et perspectives historiques sur l'histoire militaire de la région.</p>
     </header>
+
+    <!-- <div class="filters-container">
+        <form method="GET" action="index.php" class="filter-form">
+            <div class="filter-group">
+                <label for="start_date">Du :</label>
+                <input type="date" id="start_date" name="start_date" value="<?= htmlspecialchars($startDate ?? '') ?>">
+            </div>
+            <div class="filter-group">
+                <label for="end_date">Au :</label>
+                <input type="date" id="end_date" name="end_date" value="<?= htmlspecialchars($endDate ?? '') ?>">
+            </div>
+            <div class="filter-actions">
+                <button type="submit" class="btn-filter">Filtrer</button>
+                <?php if ($startDate || $endDate): ?>
+                    <a href="index.php" class="btn-clear-filter">Réinitialiser</a>
+                <?php endif; ?>
+            </div>
+        </form>
+    </div> -->
 
     <div class="article-grid">
         <?php if (!empty($articles)): ?>
