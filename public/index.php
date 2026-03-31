@@ -24,25 +24,41 @@ include __DIR__ . '/../src/includes/header.php';
         <?php if (!empty($articles)): ?>
             <?php foreach ($articles as $article): ?>
                 <article class="article-item">
-                    <h2>
-                        <a href="<?= getArticleUrl($article) ?>">
-                            <?= htmlspecialchars($article['title']) ?>
+                    <div class="article-item-inner">
+                        <a class="article-thumb" href="<?= getArticleUrl($article) ?>" aria-label="Voir l'article <?= htmlspecialchars($article['title']) ?>">
+                            <?php if (!empty($article['image_path'])): ?>
+                                <img
+                                    src="assets/uploads/<?= htmlspecialchars($article['image_path']) ?>"
+                                    alt="<?= htmlspecialchars($article['image_alt'] ?? $article['title']) ?>"
+                                    loading="lazy"
+                                >
+                            <?php else: ?>
+                                <span class="article-thumb-placeholder" aria-hidden="true">Aucune image</span>
+                            <?php endif; ?>
                         </a>
-                    </h2>
 
-                    <div class="article-meta">
-                        <time datetime="<?= $article['published_at'] ?>">
-                            Publié le : <?= date('d/m/Y', strtotime($article['published_at'])) ?>
-                        </time>
+                        <div class="article-main">
+                            <h2>
+                                <a href="<?= getArticleUrl($article) ?>">
+                                    <?= htmlspecialchars($article['title']) ?>
+                                </a>
+                            </h2>
+
+                            <div class="article-meta">
+                                <time datetime="<?= $article['published_at'] ?>">
+                                    Publié le : <?= date('d/m/Y', strtotime($article['published_at'])) ?>
+                                </time>
+                            </div>
+
+                            <p class="article-excerpt">
+                                <?= htmlspecialchars($article['excerpt']) ?>
+                            </p>
+
+                            <a href="<?= getArticleUrl($article) ?>" class="btn-read-more">
+                                Lire la suite &rarr;
+                            </a>
+                        </div>
                     </div>
-
-                    <p class="article-excerpt">
-                        <?= htmlspecialchars($article['excerpt']) ?>
-                    </p>
-
-                    <a href="<?= getArticleUrl($article) ?>" class="btn-read-more">
-                        Lire la suite &rarr;
-                    </a>
                 </article>
                 <hr>
             <?php endforeach; ?>
