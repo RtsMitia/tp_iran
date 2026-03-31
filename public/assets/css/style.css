@@ -64,7 +64,7 @@ body {
     display: grid;
     place-items: center;
     background: linear-gradient(135deg, #f2f2f2, #e5e5e5);
-    color: #777;
+    color: #555;
     font-size: 0.9rem;
 }
 
@@ -79,12 +79,12 @@ body {
 }
 
 .article-item h2 a:hover {
-    color: #e67e22; /* Iranian Orange/Copper tone */
+    color: #b55c11; /* Darker Iranian Orange/Copper tone for better contrast */
 }
 
 .article-meta {
     font-size: 0.9rem;
-    color: #777;
+    color: #555; /* Changed from #777 for better contrast */
     margin-bottom: 10px;
 }
 
@@ -142,7 +142,7 @@ body {
     font-style: italic;
     text-align: center;
     font-size: 0.9rem;
-    color: #666;
+    color: #555;
     margin-top: 5px;
 }
 

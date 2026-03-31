@@ -39,11 +39,27 @@ include __DIR__ . '/../src/includes/header.php';
 
     <?php if (!empty($images)): ?>
         <div class="article-gallery">
-            <?php foreach ($images as $image): ?>
+            <?php foreach ($images as $index => $image): 
+                $imgPath = __DIR__ . '/assets/uploads/' . $image['path'];
+                $imgWidth = '';
+                $imgHeight = '';
+                if (file_exists($imgPath)) {
+                    $size = getimagesize($imgPath);
+                    if ($size) {
+                        $imgWidth = $size[0];
+                        $imgHeight = $size[1];
+                    }
+                }
+            ?>
                 <figure>
                     <img src="assets/uploads/<?= htmlspecialchars($image['path']) ?>" 
                          alt="<?= htmlspecialchars($image['alt']) ?>"
-                         loading="lazy" 
+                         <?php if ($imgWidth): ?>width="<?= $imgWidth ?>" height="<?= $imgHeight ?>"<?php endif; ?>
+                         <?php if ($index === 0): ?>
+                             fetchpriority="high"
+                         <?php else: ?>
+                             loading="lazy" 
+                         <?php endif; ?>
                          style="max-width: 100%; height: auto;">
                     <figcaption><?= htmlspecialchars($image['alt']) ?></figcaption>
                 </figure>
@@ -53,8 +69,7 @@ include __DIR__ . '/../src/includes/header.php';
 
     <div class="article-content">
         <?php 
-            // On utilise echo sans htmlspecialchars ici car le contenu 
-            // vient de TinyMCE et contient déjà des balises HTML sécurisées
+            
             echo $article['content']; 
         ?>
     </div>

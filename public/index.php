@@ -22,7 +22,7 @@ include __DIR__ . '/../src/includes/header.php';
 
     <div class="article-grid">
         <?php if (!empty($articles)): ?>
-            <?php foreach ($articles as $article): ?>
+            <?php foreach ($articles as $index => $article): ?>
                 <article class="article-item">
                     <div class="article-item-inner">
                         <a class="article-thumb" href="<?= getArticleUrl($article) ?>" aria-label="Voir l'article <?= htmlspecialchars($article['title']) ?>">
@@ -30,7 +30,13 @@ include __DIR__ . '/../src/includes/header.php';
                                 <img
                                     src="assets/uploads/<?= htmlspecialchars($article['image_path']) ?>"
                                     alt="<?= htmlspecialchars($article['image_alt'] ?? $article['title']) ?>"
-                                    loading="lazy"
+                                    width="220"
+                                    height="145"
+                                    <?php if ($index === 0): ?>
+                                        fetchpriority="high"
+                                    <?php else: ?>
+                                        loading="lazy"
+                                    <?php endif; ?>
                                 >
                             <?php else: ?>
                                 <span class="article-thumb-placeholder" aria-hidden="true">Aucune image</span>
