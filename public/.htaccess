@@ -1,5 +1,9 @@
 Options +FollowSymlinks
 RewriteEngine on
 
+# Route all admin URLs through a single public gateway.
+RewriteRule ^admin/?$ admin/index.php [L,QSA]
+RewriteRule ^admin/(.*)$ admin/index.php?route=$1 [L,QSA]
+
 #RewriteRule ^/?.*/?.*-([_a-z0-9]*)-([_a-z0-9]*).html$  pages/modules.php?id=$1&idcat=$2 [L]
 RewriteRule ^article-.*-([0-9]+)\.html$ article_detail.php?id=$1 [L,QSA]
