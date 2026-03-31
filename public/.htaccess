@@ -7,3 +7,29 @@ RewriteRule ^admin/(.*)$ admin/index.php?route=$1 [L,QSA]
 
 #RewriteRule ^/?.*/?.*-([_a-z0-9]*)-([_a-z0-9]*).html$  pages/modules.php?id=$1&idcat=$2 [L]
 RewriteRule ^article-.*-([0-9]+)\.html$ article_detail.php?id=$1 [L,QSA]
+
+<IfModule mod_expires.c>
+    # Active l'expiration des fichiers
+    ExpiresActive On
+
+    # Définit par défaut une expiration à 1 mois après l'accès
+    ExpiresDefault "access plus 1 month"
+
+    # On peut aussi être plus précis par type de fichier
+    ExpiresByType image/jpg "access plus 1 year"
+    ExpiresByType image/png "access plus 1 year"
+    ExpiresByType text/css "access plus 1 month"
+</IfModule>
+
+<IfModule mod_deflate.c>
+  # Compresser le HTML, CSS, JavaScript, Texte, XML et Polices
+  AddOutputFilterByType DEFLATE text/html
+  AddOutputFilterByType DEFLATE text/css
+  AddOutputFilterByType DEFLATE application/javascript
+  AddOutputFilterByType DEFLATE text/xml
+  AddOutputFilterByType DEFLATE application/xml
+  AddOutputFilterByType DEFLATE image/svg+xml
+  AddOutputFilterByType DEFLATE application/vnd.ms-fontobject
+  AddOutputFilterByType DEFLATE application/x-font-ttf
+  AddOutputFilterByType DEFLATE font/opentype
+</IfModule>

@@ -42,7 +42,8 @@ include __DIR__ . '/../src/includes/header.php';
             <?php foreach ($images as $image): ?>
                 <figure>
                     <img src="assets/uploads/<?= htmlspecialchars($image['path']) ?>" 
-                         alt="<?= htmlspecialchars($image['alt']) ?>" 
+                         alt="<?= htmlspecialchars($image['alt']) ?>"
+                         loading="lazy" 
                          style="max-width: 100%; height: auto;">
                     <figcaption><?= htmlspecialchars($image['alt']) ?></figcaption>
                 </figure>
@@ -58,9 +59,9 @@ include __DIR__ . '/../src/includes/header.php';
         ?>
     </div>
 
-    <footer class="article-footer">
+    
         <a href="index.php">&larr; Retour à la liste des articles</a>
-    </footer>
+   
 </article>
 
 <?php 
