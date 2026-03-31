@@ -1,9 +1,3 @@
-<!doctype html>
-<html lang="fr"> <head>
-    <meta charset="utf-8">
-    <title><?= htmlspecialchars($pageTitle, ENT_QUOTES, 'UTF-8') ?></title>
-    <meta name="description" content="<?= htmlspecialchars($metaDescription, ENT_QUOTES, 'UTF-8') ?>">
-  
 <?php
 require_once __DIR__ . '/../src/database.php';
 require_once __DIR__ . '/../src/functions.php';
