@@ -38,10 +38,14 @@ password = VALUES(password),
 email = VALUES(email);
 
 INSERT INTO articles (title, slug, excerpt, content) VALUES 
-('The History of the Iran-Iraq War', 
- 'history-iran-iraq-war', 
- 'An overview of the 1980-1988 conflict between Iran and Iraq, its causes, and its lasting impact.', 
- '<h2>Introduction</h2><p>The war began in September 1980...</p><h3>Key Battles</h3><p>The Siege of Abadan was a major turning point...</p>');
+('Exportations militaires : Le succes des drones Shahed', 
+ 'exportations-militaires-le-succes-des-drones-shahed', 
+ 'De la Russie à lAfrique, lindustrie de larmement iranienne simpose comme un acteur majeur des conflits asymétriques modernes.', 
+ '<h2>Une technologie low-cost mais redoutable</h2>
+<p>Les drones de la famille Shahed ont prouv&eacute; leur efficacit&eacute; en saturant les d&eacute;fenses antia&eacute;riennes les plus co&ucirc;teuses, offrant un rapport qualit&eacute;-prix imbattable pour de nombreux pays.</p>
+<p><img src="../../assets/uploads/img_69cb8c8c1c5500.70414503.jpg" alt="drones-shahed" width="1500" height="1000"></p>
+<h3>Une autonomie industrielle compl&egrave;te</h3>
+<p>Malgr&eacute; des d&eacute;cennies dembargo, lIran a r&eacute;ussi &agrave; cr&eacute;er une cha&icirc;ne de production nationale capable de produire des milliers dunit&eacute;s par an sans d&eacute;pendre de composants occidentaux majeurs.</p>');
 
 INSERT INTO images (article_id, path, alt) VALUES 
-(1, 'iran_war_1980.jpg', 'Soldiers in the desert during the 1980 Iran-Iraq conflict');
+(1, 'img_69cb8c8c1c5500.70414503.jpg', 'drones-shahed');
