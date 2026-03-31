@@ -15,9 +15,23 @@ body {
 }
 
 /* --- Index.php: Article List Styling --- */
+.article-grid {
+    display: grid;
+    gap: 18px;
+}
+
 .article-item {
-    padding: 20px 0;
-    border-bottom: 1px solid #eee;
+    padding: 22px;
+    border: 1px solid #e9ecef;
+    border-radius: 12px;
+    background: #fff;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.article-item:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 18px rgba(0, 0, 0, 0.09);
 }
 
 .article-item h2 a {
@@ -34,6 +48,10 @@ body {
     font-size: 0.9rem;
     color: #777;
     margin-bottom: 10px;
+}
+
+.article-grid hr {
+    display: none;
 }
 
 /* --- Article_detail.php: DATABASE CONTENT STYLING --- */
